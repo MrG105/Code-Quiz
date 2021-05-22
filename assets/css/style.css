@@ -41,4 +41,7 @@ main {
 .timer-text {
     padding: 55px;
 }
-  
+
+ul {
+    list-style-type: none;
+}
