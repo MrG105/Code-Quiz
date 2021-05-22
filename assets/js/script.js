@@ -6,6 +6,7 @@ var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
 var button3 = document.getElementById("button3");
 var button4 = document.getElementById("button4");
+var rightOrWrong = document.getElementById("rightOrWrong")
 
 // Question and Answer Arrays
 var question = document.getElementById("questions");
@@ -63,8 +64,6 @@ function subtractTime() {
 // Local Storage: High Scores
 // function of losing: call them a bitch
 // restart button
-// right/wrong indicator text after each answer
-
 
 function startGame() {
     startTimer();
@@ -90,8 +89,20 @@ function showQuestions() {
 // check for correct/incorrect click
 function checkAnswer(event) {
     if (correctAnswers[currentQuestionIndex] === (event.currentTarget.innerText)) {
+        rightOrWrong.style.color = "Green";
+        rightOrWrong.textContent = "CORRECT";
+        rightOrWrong.classList.add('show');
+        setTimeout(function(){
+            rightOrWrong.classList.remove('show');
+        }, 1000);
 
     } else {
+        rightOrWrong.style.color = "Red";
+        rightOrWrong.textContent = "WRONG";
+        rightOrWrong.classList.add('show');
+        setTimeout(function(){
+            rightOrWrong.classList.remove('show');
+        }, 1000);
         subtractTime();
     }
     currentQuestionIndex++;
