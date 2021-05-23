@@ -58,3 +58,7 @@ ul {
 #rightOrWrong.show {
     display: block;
 }
+
+#initials {
+    width:100%;
+}

@@ -13,7 +13,11 @@ var timeLeft= 60;
 var timeInterval;
 var inputGroup = document.getElementById("input-group");
 var initialsInput = document.querySelector("#initials");
-var highScoresCard = document.querySelector(".highScores")
+var highScoresCard = document.querySelector(".highScores");
+var highScores = [];
+var resetButton = document.getElementById("resetScores")
+
+var scores = document.querySelector("#scores")
 
 // Question and Answer Arrays
 var question = document.getElementById("questions");
@@ -139,11 +143,25 @@ function endGame() {
     
 }
 
+function storeScores() {
+    localStorage.setItem("highScores", JSON.stringify(highScores))
+}
+
+function renderScores() {
+    scores.innerHTML = "";
+    for (var i = 0; i < highScores.length; i++) {
+        var li = document.createElement("li");
+        li.textContent = highScores[i].initials + " - " + highScores[i].score ;
+        scores.appendChild(li);
+    }
+}
+
 function init() {
     var storedHighScores = JSON.parse(localStorage.getItem("highScores"));
     if (storedHighScores !== null) {
         highScores = storedHighScores;
     }
+    renderScores();
 }
 // Attach event listener to start button to call startGame function on click, checkAnswer function on quiz buttons
 startButton.addEventListener("click", startGame);
@@ -151,13 +169,20 @@ button1.addEventListener("click", checkAnswer);
 button2.addEventListener("click", checkAnswer);
 button3.addEventListener("click", checkAnswer);
 button4.addEventListener("click", checkAnswer);
-submitButton.addEventListener("click", function(event) {
+inputGroup.addEventListener("submit", function(event) {
     event.preventDefault();
-    var highScores = {
-        initials: initialsInput.value,
+    var initialsData = initialsInput.value.trim();
+    var newHighScore = {
+        initials: initialsData,
         score: timeLeft
-    };
-    localStorage.setItem("highScores", JSON.stringify(highScores));
+    }
+    highScores.push(newHighScore)
+    storeScores();
+    renderScores();    
 })
-
+resetButton.addEventListener("click", function() {
+    highScores = [];
+    storeScores();
+    renderScores();
+})
 init()
